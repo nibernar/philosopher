@@ -3,73 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:12:28 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/05 20:25:47 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/08 16:02:37 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void    take_forks(t_philo *philo)
+void	take_forks(t_philo *philo)
 {
-    dprintf(2, "index %d flag_l %d  flag_r %d\n", philo->index, philo->flag_l_fork, philo->flag_r_fork);
-    if (pthread_mutex_lock(&philo->data_philo->forks[philo->l_fork]) == 0)
-    {
-        printf("philo [%d] a pris la fourchette gauche %d\n", philo->index, philo->l_fork);
-        //philo->flag_l_fork = 1;
-        if (pthread_mutex_lock(&philo->data_philo->forks[philo->r_fork]) == 0)
-        {
-            printf("philo [%d] a pris la fourchette droite %d\n", philo->index, philo->r_fork);
-            //philo->flag_r_fork = 1;
-             philo->mode = EATING;
-        }
-    }
-    //if (philo->flag_l_fork == 1 && philo->flag_r_fork == 1)
-        //philo->mode = EATING;
-    dprintf(2, "index %d mode %d\n", philo->index, philo->mode);
+	pthread_mutex_lock(&philo->data_philo->forks[philo->l_fork]);
+	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	{
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+		return ;
+	}
+	if (philo->data_philo->mode != DEAD)
+		print_msg(philo, TAKING);
+	pthread_mutex_lock(&philo->data_philo->forks[philo->r_fork]);
+	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	{
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+		return ;
+	}
+	if (philo->data_philo->mode != DEAD)
+		print_msg(philo, TAKING);
+	philo->mode = EATING;
 }
 
-void    philo_thinking(t_philo *philo)
+void	philo_thinking(t_philo *philo)
 {
-    printf("philo [%d] pense\n", philo->index);
-    philo->mode = WAITING;
+	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+		return ;
+	if (philo->data_philo->mode != DEAD)
+		print_msg(philo, THINKING);
+	philo->mode = WAITING;
 }
 
-void    eating(t_philo *philo)
+void	eating(t_philo *philo)
 {
-    printf("philo [%d] mange\n", philo->index);
-    philo->flag_l_fork = 0;
-    philo->flag_r_fork = 0;
-    pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
-    pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
-    //printf("philo [%d] index forks [%d] retour %d\n", philo->index, philo->l_fork, pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]));
-    //printf("philo [%d] index forks [%d] retour %d\n", philo->index, philo->r_fork, pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]));
-    philo->mode = THINKING;
-    usleep(2000);
+	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	{
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+		return ;
+	}
+	philo->last_diner = timer();
+	if (philo->data_philo->mode != DEAD)
+		print_msg(philo, EATING);
+	philo->data_philo->diner++;
+	ft_usleep(philo->data_philo->time_to_eat);
+	philo->next_diner = timer() + philo->data_philo->time_to_die;
+	pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+	pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
+	philo->mode = SLEEPING;
 }
 
-// thinking, wainting, eating, sleeping
-void    *routine(void *data)
+void	sleeping(t_philo *philo)
 {
-    t_philo *philo;
-
-    philo = (t_philo*)data;
-    philo->time = timer();
-    //print_philo(philo);
-    while (1)
-    {
-        if (philo->mode == THINKING)
-        {
-            philo_thinking(philo);
-            // if (philo->index % 2 == 0)
-            //     usleep(50);
-        }
-        if (philo->mode == WAITING)
-            take_forks(philo);
-        if (philo->mode == EATING)
-            eating(philo);
-    }
-    return (NULL);
+	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+		return ;
+	if (philo->data_philo->mode != DEAD)
+		print_msg(philo, SLEEPING);
+	ft_usleep(philo->data_philo->time_to_sleep);
+	philo->mode = THINKING;
 }

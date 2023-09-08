@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:37:35 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/08/29 15:38:38 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/08 15:58:41 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @return Returns a nonzero value if the character is a space character,
  * 0 if the character is not space.
  */
-int	ft_isspace(int c)
+static int	ft_isspace(int c)
 {
 	return (c == '\n' || c == '\r' || c == '\v' || c == '\t' \
 			|| c == '\f' || c == ' ');
@@ -71,17 +71,16 @@ int	ft_atoi(const char *str)
 	return ((int) result);
 }
 
-
 int	it_is_digit(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (!ft_isdigit((int)str[i]))
-            return (0);
-        i++;
-    }
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit((int)str[i]))
+			return (0);
+		i++;
+	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+         #
+#    By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 13:56:12 by nibernar          #+#    #+#              #
-#    Updated: 2023/09/04 14:14:00 by nicolasbern      ###   ########.fr        #
+#    Updated: 2023/09/08 15:27:39 by nibernar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS		=	src/philosopher.c\
 				src/utils.c\
 				src/utils2.c\
 				src/print_struct.c\
+				src/dead.c\
 
 
 OBJS		=	${SRCS:.c=.o}
@@ -48,13 +49,14 @@ CC			=	cc
 #########################
 # 		RULES			#
 #########################
+all: $(NAME)
 
 ./src/%.o: ./src/%.c ${HEADERS}
 	${CC} ${CFLAGS} -I${HEADER_PATH} -g -c $< -o $@
 	
 ${NAME} : ${OBJS}
 	echo "Compiling: philosopher..."
-	${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+	${CC} ${CFLAGS} ${OBJS} -o ${NAME} -pthread
 	echo "Succes !\n"
 
 #########################
