@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 13:55:17 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/08 15:59:25 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/09 16:18:41 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,14 @@ bool	philo_is_satisfied(t_philo *philo)
 	if (philo->data_philo->diner == philo->data_philo->philo_must_eat)
 		return (true);
 	return (false);
+}
+
+void	ft_free(void *data)
+{
+	t_data	*tmp;
+
+	tmp = (t_data *) data;
+	free(tmp->philo);
+	free((void *) tmp->thread);
+	free((void *) tmp->forks);
 }

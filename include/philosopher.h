@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:52:15 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/08 15:55:47 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:04:33 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	check_philo_is_dead(t_data *data);
 *   Print    *
 **************/
 
-//void	print_philo(t_philo *philo);
-//void	print_forks(t_philo *philo);
+void	print_philo(t_philo *philo);
+void	print_forks(t_philo *philo);
 void	print_mode(t_mode mode);
 void	print_msg(t_philo *philo, t_mode mode);
 void	print_dead_msg(t_philo *philo, t_mode mode);
@@ -103,4 +103,9 @@ void	philo_thinking(t_philo *philo);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 
+/*************
+*   Free     *
+**************/
+
+void	ft_free(void *data);
 #endif

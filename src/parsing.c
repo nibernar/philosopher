@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:35:30 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/08 15:58:15 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:12:00 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	init_philo(t_philo *philo, t_data *data)
 	i = -1;
 	while (++i < data->number_of_philosophers)
 	{
-		philo[i].index = i;
+		philo[i].index = i + 1;
 		philo[i].l_fork = i;
 		if (i % data->number_of_philosophers == 0)
 			philo[i].r_fork = (data->number_of_philosophers - 1);

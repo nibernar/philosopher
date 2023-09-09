@@ -6,7 +6,7 @@
 #    By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 13:56:12 by nibernar          #+#    #+#              #
-#    Updated: 2023/09/08 15:27:39 by nibernar         ###   ########.fr        #
+#    Updated: 2023/09/09 15:55:06 by nibernar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRCS		=	src/philosopher.c\
 				src/routine.c\
 				src/utils.c\
 				src/utils2.c\
-				src/print_struct.c\
+				src/print.c\
 				src/dead.c\
 
 
@@ -57,7 +57,7 @@ all: $(NAME)
 ${NAME} : ${OBJS}
 	echo "Compiling: philosopher..."
 	${CC} ${CFLAGS} ${OBJS} -o ${NAME} -pthread
-	echo "Succes !\n"
+	echo "Succes !"
 
 #########################
 # 	CLEAN COMMANDS		#
@@ -71,12 +71,12 @@ lib: force
 clean :
 	@echo "Delete *.o"
 	${RM} ${OBJS} 
-	@echo "Succes !\n"
+	@echo "Succes !"
 
 fclean: clean
 	@echo "Delete *.a && executable"
 	${RM} ${NAME}
-	@echo "Succes !\n"
+	@echo "Succes !"
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:12:28 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/08 16:02:37 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:34:29 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	take_forks(t_philo *philo)
 	if (philo->data_philo->mode != DEAD)
 		print_msg(philo, TAKING);
 	pthread_mutex_lock(&philo->data_philo->forks[philo->r_fork]);
-	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	if (philo->data_philo->number_of_philosophers == 1 || philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
 	{
+		if (philo->data_philo->number_of_philosophers == 1)
+			philo->data_philo->mode = DEAD;
 		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
 		return ;
 	}

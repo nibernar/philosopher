@@ -6,17 +6,23 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:36:01 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/08 16:01:37 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:35:10 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
+// faire philo avec 1 philo
+// faire les retours d'err correctement
 static void	*routine(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *) data;
+	// if (philo->data_philo->number_of_philosophers == 1)
+	// faire une fonction ou :
+	// - il prend une forks + aff msg de take fork 
+	// - wait de time to die + aff msg de died
+	// - liberer la fork
 	while (philo->data_philo->mode != DEAD)
 	{
 		if (philo->data_philo->mode == DEAD \
@@ -32,7 +38,6 @@ static void	*routine(void *data)
 			eating(philo);
 		if (philo->mode == SLEEPING)
 			sleeping(philo);
-		dprintf(2, "diner = %d\n", philo->data_philo->diner);
 	}
 	return (NULL);
 }
@@ -72,6 +77,10 @@ int	main(int argc, char **argv)
 	}
 	else
 		printf("error\n");
+	int i = -1;
+	while (++i < data.number_of_philosophers)
+		print_philo(&data.philo[i]);
 	start_game(&data);
+	ft_free((void *)&data);
 	return (0);
 }
