@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+         #
+#    By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 13:56:12 by nibernar          #+#    #+#              #
-#    Updated: 2023/09/09 15:55:06 by nibernar         ###   ########.fr        #
+#    Updated: 2023/09/12 11:44:20 by nicolasbern      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS		=	src/philosopher.c\
 				src/utils.c\
 				src/utils2.c\
 				src/print.c\
-				src/dead.c\
+				src/check_situation.c\
 
 
 OBJS		=	${SRCS:.c=.o}

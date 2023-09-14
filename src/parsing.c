@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:35:30 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/09 18:12:00 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:34:26 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static int	init_args(int argc, char **argv, t_data *data)
 {
-	if (it_is_digit(argv[1]))
+	if (it_is_digit(argv[1]) && ft_atoi(argv[1]) != 0)
 		data->number_of_philosophers = ft_atoi(argv[1]);
 	else
-		return (EXIT_FAILURE, printf("error nbr of philo\n"));
+		exit (print_error(NBR_PHILOS));
 	if (it_is_digit(argv[2]))
 		data->time_to_die = ft_atoi(argv[2]);
 	else
-		return (EXIT_FAILURE, printf("error time to die\n"));
+		exit (print_error(TTD_ARG));
 	if (it_is_digit(argv[3]))
 		data->time_to_eat = ft_atoi(argv[3]);
 	else
-		return (EXIT_FAILURE, printf("error time to eat\n"));
+		exit (print_error(TTE_ARG));
 	if (it_is_digit(argv[4]))
 		data->time_to_sleep = ft_atoi(argv[4]);
 	else
-		return (EXIT_FAILURE, printf("error time to sleep\n"));
+		exit (print_error(TTS_ARG));
 	return (EXIT_SUCCESS);
 }
 
@@ -39,15 +39,15 @@ static int	init_data(int argc, char **argv, t_data *data)
 		return (EXIT_FAILURE);
 	if (argc == 6)
 	{
-		if (it_is_digit(argv[5]))
+		if (it_is_digit(argv[5]) && ft_atoi(argv[5]) != 0)
 			data->philo_must_eat = ft_atoi(argv[5]);
 		else
-			return (EXIT_FAILURE, printf("error number of philo eat\n"));
+			exit (print_error(MUST_EAT_ARG));
 	}
 	else
 		data->philo_must_eat = -1;
-	data->diner = 0;
-	data->mode = ALIVE;
+	data->lunch = NOT_FULL;
+	data->life = ALIVE;
 	return (EXIT_SUCCESS);
 }
 
@@ -65,6 +65,7 @@ static void	init_philo(t_philo *philo, t_data *data)
 		else
 			philo[i].r_fork = i - 1;
 		philo[i].mode = THINKING;
+		philo[i].diner = 0;
 		philo[i].data_philo = data;
 		philo[i].last_diner = timer();
 		philo[i].next_diner = timer() + data->time_to_die;
@@ -78,17 +79,13 @@ static int	init_mutex(t_data *data)
 
 	i = -1;
 	if (pthread_mutex_init(&data->print, NULL) != 0)
-	{
-		printf("error_init_mutex\n");
-		return (EXIT_FAILURE);
-	}
+		exit (print_error(ERR_MUTEX));
+	if (pthread_mutex_init(&data->status, NULL) != 0)
+		exit (print_error(ERR_MUTEX));
 	while (++i < data->number_of_philosophers)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-		{
-			printf("error_init_mutex\n");
-			return (EXIT_FAILURE);
-		}
+			exit (print_error(ERR_MUTEX));
 	}
 	return (EXIT_SUCCESS);
 }
@@ -99,25 +96,16 @@ int	parsing(int argc, char **argv, t_data *data, t_philo *philo)
 		return (EXIT_FAILURE);
 	philo = malloc(sizeof(t_philo) * data->number_of_philosophers);
 	if (philo == 0)
-	{
-		printf("error malloc\n");
-		return (EXIT_FAILURE);
-	}
+		exit (print_error(ERR_MALLOC));
 	init_philo(philo, data);
 	data->thread = malloc(sizeof(pthread_t) * data->number_of_philosophers);
 	if (data->thread == 0)
-	{
-		printf("error malloc\n");
-		return (EXIT_FAILURE);
-	}
+		exit (print_error(ERR_MALLOC));
 	data->forks = malloc(sizeof(pthread_mutex_t) \
 	* data->number_of_philosophers);
 	if (data->forks == 0)
-	{
-		printf("error malloc\n");
-		return (EXIT_FAILURE);
-	}
+		exit (print_error(ERR_MALLOC));
 	if (init_mutex(data))
-		return (EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

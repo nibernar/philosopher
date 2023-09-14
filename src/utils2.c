@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 13:55:17 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/09 16:18:41 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:59:48 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,12 @@ void	ft_usleep(int time)
 {
 	long	timing;
 
-	timing = timer() + time;
+	if (time == 0)
+		timing = timer() + 1;
+	else
+		timing = timer() + time;
 	while (timer() < timing)
 		usleep(50);
-}
-
-bool	philo_is_satisfied(t_philo *philo)
-{
-	if (philo->data_philo->diner == philo->data_philo->philo_must_eat)
-		return (true);
-	return (false);
 }
 
 void	ft_free(void *data)

@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dead.c                                             :+:      :+:    :+:   */
+/*   check_situation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:27:06 by nibernar          #+#    #+#             */
-/*   Updated: 2023/09/08 16:03:00 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:33:51 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
+bool	philo_is_satisfied(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->number_of_philosophers)
+	{
+		if (data->philo_must_eat != -1 && data->philo[i].diner < data->philo_must_eat)
+			return (false);
+	}
+	return (true);
+}
+
 bool	philo_is_dead(t_philo *philo)
 {
-	if (philo->last_diner >= philo->next_diner)
+	long time;
+
+	time = timer();
+	if (time >= philo->next_diner)
 		return (true);
 	return (false);
 }
 
-void	check_philo_is_dead(t_data *data)
+void	check_philo_situation(t_data *data)
 {
 	int	i;
 
@@ -29,14 +45,20 @@ void	check_philo_is_dead(t_data *data)
 		i = -1;
 		while (++i < data->number_of_philosophers)
 		{
-			if (philo_is_satisfied(&data->philo[i]) == true)
+			if (data->philo_must_eat != -1 && philo_is_satisfied(data) == true)
+			{
+				data->lunch = FULL;
 				return ;
+			}
 			if (philo_is_dead(&data->philo[i]) == true)
 			{
-				data->mode = DEAD;
+				pthread_mutex_lock(&data->status);
+				data->life = NOT_ALIVE;
 				print_dead_msg(&data->philo[i], DEAD);
+				pthread_mutex_unlock(&data->status);
 				return ;
 			}
 		}
+		ft_usleep(5);
 	}
 }

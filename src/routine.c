@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:12:28 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/09 18:34:29 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:45:38 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,48 @@
 void	take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data_philo->forks[philo->l_fork]);
-	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	if (philo->data_philo->life == NOT_ALIVE || philo->data_philo->lunch == FULL)
 	{
 		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
 		return ;
 	}
-	if (philo->data_philo->mode != DEAD)
+	if (philo->data_philo->life == ALIVE || philo->data_philo->lunch == NOT_FULL)
 		print_msg(philo, TAKING);
 	pthread_mutex_lock(&philo->data_philo->forks[philo->r_fork]);
-	if (philo->data_philo->number_of_philosophers == 1 || philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	if (philo->data_philo->life == NOT_ALIVE || philo->data_philo->lunch == FULL)
 	{
-		if (philo->data_philo->number_of_philosophers == 1)
-			philo->data_philo->mode = DEAD;
 		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
 		return ;
 	}
-	if (philo->data_philo->mode != DEAD)
+	if (philo->data_philo->life == ALIVE || philo->data_philo->lunch == NOT_FULL)
 		print_msg(philo, TAKING);
 	philo->mode = EATING;
 }
 
 void	philo_thinking(t_philo *philo)
 {
-	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	if (philo->data_philo->life == NOT_ALIVE || philo->data_philo->lunch == FULL)
 		return ;
-	if (philo->data_philo->mode != DEAD)
+	if (philo->data_philo->life == ALIVE || philo->data_philo->lunch == NOT_FULL)
 		print_msg(philo, THINKING);
 	philo->mode = WAITING;
 }
 
 void	eating(t_philo *philo)
 {
-	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	if (philo->data_philo->life == NOT_ALIVE || philo->data_philo->lunch == FULL)
 	{
 		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
 		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
 		return ;
 	}
 	philo->last_diner = timer();
-	if (philo->data_philo->mode != DEAD)
+	philo->diner++;
+	if (philo->data_philo->life == ALIVE || philo->data_philo->lunch == NOT_FULL)
 		print_msg(philo, EATING);
-	philo->data_philo->diner++;
-	ft_usleep(philo->data_philo->time_to_eat);
 	philo->next_diner = timer() + philo->data_philo->time_to_die;
+	ft_usleep(philo->data_philo->time_to_eat);
 	pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
 	pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
 	philo->mode = SLEEPING;
@@ -65,10 +64,19 @@ void	eating(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-	if (philo->data_philo->mode == DEAD || philo_is_satisfied(philo) == true)
+	if (philo->data_philo->life == NOT_ALIVE || philo->data_philo->lunch == FULL)
 		return ;
-	if (philo->data_philo->mode != DEAD)
+	if (philo->data_philo->life == ALIVE || philo->data_philo->lunch == NOT_FULL)
 		print_msg(philo, SLEEPING);
 	ft_usleep(philo->data_philo->time_to_sleep);
 	philo->mode = THINKING;
+}
+
+void	only_one_philo(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data_philo->forks[philo->l_fork]);
+	print_msg(philo, TAKING);
+	ft_usleep(philo->data_philo->time_to_die);
+	print_dead_msg(&philo[0], DEAD);
+	pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
 }
