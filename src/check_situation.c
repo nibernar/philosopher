@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:27:06 by nibernar          #+#    #+#             */
-/*   Updated: 2023/09/14 15:33:51 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/14 16:09:44 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	check_philo_situation(t_data *data)
 		i = -1;
 		while (++i < data->number_of_philosophers)
 		{
+			pthread_mutex_lock(&data->status);
 			if (data->philo_must_eat != -1 && philo_is_satisfied(data) == true)
 			{
 				data->lunch = FULL;
@@ -52,12 +53,11 @@ void	check_philo_situation(t_data *data)
 			}
 			if (philo_is_dead(&data->philo[i]) == true)
 			{
-				pthread_mutex_lock(&data->status);
 				data->life = NOT_ALIVE;
 				print_dead_msg(&data->philo[i], DEAD);
-				pthread_mutex_unlock(&data->status);
 				return ;
 			}
+			pthread_mutex_unlock(&data->status);
 		}
 		ft_usleep(5);
 	}

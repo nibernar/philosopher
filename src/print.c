@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 15:50:46 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 15:52:26 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/14 16:24:34 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ void	print_dead_msg(t_philo *philo, t_mode mode)
 
 void	print_msg(t_philo *philo, t_mode mode)
 {
-	//dprintf(2, "[%d]\n", philo->index);
 	pthread_mutex_lock(&philo->data_philo->print);
-	if (philo->data_philo->life == NOT_ALIVE)
+	if (philo->data_philo->life == NOT_ALIVE \
+	|| philo->data_philo->lunch == FULL)
 	{
+		ft_usleep(5);
 		pthread_mutex_unlock(&philo->data_philo->print);
 		return ;
 	}
