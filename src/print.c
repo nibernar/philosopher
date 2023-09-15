@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 15:50:46 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 16:24:34 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/14 22:06:38 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,21 @@ void	print_mode(t_mode mode)
 
 void	print_dead_msg(t_philo *philo, t_mode mode)
 {
+	size_t time;
+
 	pthread_mutex_lock(&philo->data_philo->print);
-	printf("%ld %d ", timer(), philo->index);
+	time = timer() - philo->data_philo->start;
+	printf("%ld %d ", time, philo->index);
 	print_mode(mode);
 	pthread_mutex_unlock(&philo->data_philo->print);
 }
 
 void	print_msg(t_philo *philo, t_mode mode)
 {
+	size_t time;
+
 	pthread_mutex_lock(&philo->data_philo->print);
+	time = timer() - philo->data_philo->start;
 	if (philo->data_philo->life == NOT_ALIVE \
 	|| philo->data_philo->lunch == FULL)
 	{
@@ -68,7 +74,7 @@ void	print_msg(t_philo *philo, t_mode mode)
 		pthread_mutex_unlock(&philo->data_philo->print);
 		return ;
 	}
-	printf("%ld %d ", timer(), philo->index);
+	printf("%ld %d ", time, philo->index);
 	print_mode(mode);
 	pthread_mutex_unlock(&philo->data_philo->print);
 }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:37:35 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/08 15:58:41 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/16 00:34:44 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+#include <limits.h>
 
 /**
  * @brief Checks if the character is a space character.
@@ -50,24 +51,22 @@ int	ft_atoi(const char *str)
 	long long	result;
 
 	i = 0;
-	signe = 0;
+	signe = 1;
 	result = 0;
 	while (str[i] != '\0' && (ft_isspace((const int)str[i])))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			signe = 1;
+			signe = -1;
 		i++;
 	}
 	while (str[i] && (ft_isdigit((int)str[i])))
-	{
 		if (ft_isdigit((int)str[i]))
-			result = result * 10 + (str[i] - '0');
-		i++;
-	}
-	if (signe)
-		result = result * -1;
+			result = result * 10 + (str[i++] - '0');
+	result = result * signe;
+	if (result >= INT_MAX)
+		return (-1);
 	return ((int) result);
 }
 

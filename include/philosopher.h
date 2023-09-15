@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:52:15 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 13:09:54 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/15 19:34:43 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef enum e_lunch
 
 typedef enum e_life
 {
-	NOT_ALIVE,
 	ALIVE,
+	NOT_ALIVE,
 }	t_life;
 
 typedef struct s_philo
@@ -76,9 +76,10 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				philo_must_eat;
+	size_t			start;
 	t_life			life;
 	t_lunch			lunch;
-	int				philo_must_eat;
 	t_philo			*philo;
 }	t_data;
 

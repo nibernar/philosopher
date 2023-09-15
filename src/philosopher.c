@@ -6,12 +6,12 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:36:01 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 15:46:57 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 00:54:15 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-	
+
 static void	*routine(void *data)
 {
 	t_philo	*philo;
@@ -26,8 +26,12 @@ static void	*routine(void *data)
 		if (philo->data_philo->life == NOT_ALIVE \
 		|| philo->data_philo->lunch == FULL)
 			break ;
-		if (philo->index % 2 != 0)
-			ft_usleep(5);
+		if (philo->mode == WAITING)
+		{
+			if (philo->index % 2 == 0)
+				ft_usleep(5);
+			philo->mode = THINKING;
+		}
 		if (philo->mode == THINKING)
 			philo_thinking(philo);
 		if (philo->mode == WAITING)
@@ -50,7 +54,7 @@ int	start_game(t_data *data)
 	{
 		if (pthread_create(&data->thread[i], NULL, \
 		&routine, (void *)&data->philo[i]) != 0)
-			exit(print_error(ERR_THREAD));
+			return (EXIT_FAILURE, print_error(ERR_THREAD));
 	}
 	if (data->number_of_philosophers != 1)
 		check_philo_situation(data);
@@ -80,9 +84,9 @@ int	main(int argc, char **argv)
 		ft_free((void *)&data);
 		return (0);
 	}
-	// int i = -1;
-	// while (++i < data.number_of_philosophers)
-	// 	print_philo(&data.philo[i]);
+	int i = -1;
+	while (++i < data.number_of_philosophers)
+		print_philo(&data.philo[i]);
 	ft_free((void *)&data);
 	return (0);
 }

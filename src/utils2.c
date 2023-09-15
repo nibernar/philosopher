@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 13:55:17 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/12 14:59:48 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/14 22:05:44 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 long	timer(void)
 {
-	struct timeval	tv;
-	long			time;
+	struct timeval	time;
 
-	gettimeofday(&tv, NULL);
-	time = 0;
-	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (time);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 void	ft_usleep(int time)

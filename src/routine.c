@@ -6,37 +6,11 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:12:28 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 16:25:50 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/15 12:25:20 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-void	take_forks(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data_philo->forks[philo->l_fork]);
-	if (philo->data_philo->life == NOT_ALIVE \
-	|| philo->data_philo->lunch == FULL)
-	{
-		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
-		return ;
-	}
-	if (philo->data_philo->life == ALIVE || \
-	philo->data_philo->lunch == NOT_FULL)
-		print_msg(philo, TAKING);
-	pthread_mutex_lock(&philo->data_philo->forks[philo->r_fork]);
-	if (philo->data_philo->life == NOT_ALIVE || \
-	philo->data_philo->lunch == FULL)
-	{
-		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
-		pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
-		return ;
-	}
-	if (philo->data_philo->life == ALIVE \
-	|| philo->data_philo->lunch == NOT_FULL)
-		print_msg(philo, TAKING);
-	philo->mode = EATING;
-}
 
 void	philo_thinking(t_philo *philo)
 {
@@ -49,6 +23,32 @@ void	philo_thinking(t_philo *philo)
 	philo->mode = WAITING;
 }
 
+void	take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data_philo->forks[philo->r_fork]);
+	if (philo->data_philo->life == NOT_ALIVE \
+	|| philo->data_philo->lunch == FULL)
+	{
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
+		return ;
+	}
+	if (philo->data_philo->life == ALIVE || \
+	philo->data_philo->lunch == NOT_FULL)
+		print_msg(philo, TAKING);
+	pthread_mutex_lock(&philo->data_philo->forks[philo->l_fork]);
+	if (philo->data_philo->life == NOT_ALIVE || \
+	philo->data_philo->lunch == FULL)
+	{
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
+		pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);
+		return ;
+	}
+	if (philo->data_philo->life == ALIVE \
+	|| philo->data_philo->lunch == NOT_FULL)
+		print_msg(philo, TAKING);
+	philo->mode = EATING;
+}
+
 void	eating(t_philo *philo)
 {
 	if (philo->data_philo->life == NOT_ALIVE \
@@ -58,11 +58,11 @@ void	eating(t_philo *philo)
 		pthread_mutex_unlock(&philo->data_philo->forks[philo->r_fork]);
 		return ;
 	}
-	philo->last_diner = timer();
 	philo->diner++;
 	if (philo->data_philo->life == ALIVE \
 	|| philo->data_philo->lunch == NOT_FULL)
 		print_msg(philo, EATING);
+	philo->last_diner = timer();
 	philo->next_diner = timer() + philo->data_philo->time_to_die;
 	ft_usleep(philo->data_philo->time_to_eat);
 	pthread_mutex_unlock(&philo->data_philo->forks[philo->l_fork]);

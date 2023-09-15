@@ -6,7 +6,7 @@
 #    By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 13:56:12 by nibernar          #+#    #+#              #
-#    Updated: 2023/09/12 11:44:20 by nicolasbern      ###   ########.fr        #
+#    Updated: 2023/09/16 00:15:25 by nicolasbern      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #		MAKEFILE		#
 #########################
 
-NAME		=	philosopher
+NAME		=	philo
 
 #########################
 #	HEADER FOLDERS		#
@@ -55,9 +55,7 @@ all: $(NAME)
 	${CC} ${CFLAGS} -I${HEADER_PATH} -g -c $< -o $@
 	
 ${NAME} : ${OBJS}
-	echo "Compiling: philosopher..."
 	${CC} ${CFLAGS} ${OBJS} -o ${NAME} -pthread
-	echo "Succes !"
 
 #########################
 # 	CLEAN COMMANDS		#

@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:27:06 by nibernar          #+#    #+#             */
-/*   Updated: 2023/09/14 16:09:44 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/15 12:28:38 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ bool	philo_is_satisfied(t_data *data)
 
 bool	philo_is_dead(t_philo *philo)
 {
-	long time;
+	size_t time;
 
 	time = timer();
-	if (time >= philo->next_diner)
+	if (time > philo->next_diner)
 		return (true);
 	return (false);
 }
