@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:52:15 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/15 19:34:43 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 15:18:42 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_philo
 	long			next_diner;
 	int				diner;
 	t_mode			mode;
-	struct s_data	*data_philo;
+	struct s_data	*table;
 }	t_philo;
 
 typedef struct s_data
@@ -135,6 +135,6 @@ void	only_one_philo(t_philo *philo);
 *    Free    *
 *************/
 
-void	ft_free(void *data);
+void	free_data(t_data *data);
 
 #endif

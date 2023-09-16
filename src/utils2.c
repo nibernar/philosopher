@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 13:55:17 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 22:05:44 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 15:21:58 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ void	ft_usleep(int time)
 		usleep(50);
 }
 
-void	ft_free(void *data)
+void	free_data(t_data *data)
 {
-	t_data	*tmp;
+	int i;
 
-	tmp = (t_data *) data;
-	free(tmp->philo);
-	free((void *) tmp->thread);
-	free((void *) tmp->forks);
+	i = -1;
+	while (++i < data->number_of_philosophers)
+		pthread_mutex_destroy(&data->forks[i]);
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->status);
+	free(data->forks);
+	free(data->thread);
+	free(data->philo);
 }

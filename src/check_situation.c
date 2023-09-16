@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:27:06 by nibernar          #+#    #+#             */
-/*   Updated: 2023/09/15 12:28:38 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 14:57:25 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ bool	philo_is_satisfied(t_data *data)
 	i = -1;
 	while (++i < data->number_of_philosophers)
 	{
-		if (data->philo_must_eat != -1 && data->philo[i].diner < data->philo_must_eat)
+		if (data->philo_must_eat != -1 && \
+		data->philo[i].diner < data->philo_must_eat)
 			return (false);
 	}
 	return (true);

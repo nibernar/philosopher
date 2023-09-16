@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 15:50:46 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/14 22:06:38 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 14:54:45 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,29 @@ void	print_dead_msg(t_philo *philo, t_mode mode)
 {
 	size_t time;
 
-	pthread_mutex_lock(&philo->data_philo->print);
-	time = timer() - philo->data_philo->start;
+	pthread_mutex_lock(&philo->table->print);
+	time = timer() - philo->table->start;
 	printf("%ld %d ", time, philo->index);
 	print_mode(mode);
-	pthread_mutex_unlock(&philo->data_philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 }
 
 void	print_msg(t_philo *philo, t_mode mode)
 {
 	size_t time;
 
-	pthread_mutex_lock(&philo->data_philo->print);
-	time = timer() - philo->data_philo->start;
-	if (philo->data_philo->life == NOT_ALIVE \
-	|| philo->data_philo->lunch == FULL)
+	pthread_mutex_lock(&philo->table->print);
+	time = timer() - philo->table->start;
+	if (philo->table->life == NOT_ALIVE \
+	|| philo->table->lunch == FULL)
 	{
 		ft_usleep(5);
-		pthread_mutex_unlock(&philo->data_philo->print);
+		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	}
 	printf("%ld %d ", time, philo->index);
 	print_mode(mode);
-	pthread_mutex_unlock(&philo->data_philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 }
 
 static void    print_struct(t_data *data)
@@ -106,6 +106,6 @@ void    print_philo(t_philo *philo)
     printf("next_diner          : %ld\n", philo->next_diner);
     printf("diner               : %d\n", philo->diner);
     print_mode(philo->mode);
-    print_struct(philo->data_philo);
+    print_struct(philo->table);
     printf("-------------------------------\n");
 }

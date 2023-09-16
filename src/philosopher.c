@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:36:01 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 00:54:15 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 15:18:24 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 static void	*routine(void *data)
 {
 	t_philo	*philo;
+
 	philo = (t_philo *) data;
-	if (philo->data_philo->number_of_philosophers == 1)
+	if (philo->table->number_of_philosophers == 1)
+		return (only_one_philo(philo), NULL);
+	while (philo->table->life != NOT_ALIVE)
 	{
-		only_one_philo(philo);
-		return (NULL);
-	}
-	while (philo->data_philo->life != NOT_ALIVE)
-	{
-		if (philo->data_philo->life == NOT_ALIVE \
-		|| philo->data_philo->lunch == FULL)
+		if (philo->table->life == NOT_ALIVE || philo->table->lunch == FULL)
 			break ;
 		if (philo->mode == WAITING)
 		{
@@ -44,7 +41,7 @@ static void	*routine(void *data)
 	return (NULL);
 }
 
-int	start_game(t_data *data)
+static int	start_game(t_data *data)
 {
 	int	i;
 	int	l;
@@ -75,18 +72,12 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		if (parsing(argc, argv, &data, philo))
-			return (0);
+			return (free_data(&data), 0);
 	}
 	else
 		return (print_error(NBR_ARGUMENTS));
 	if (start_game(&data))
-	{
-		ft_free((void *)&data);
-		return (0);
-	}
-	int i = -1;
-	while (++i < data.number_of_philosophers)
-		print_philo(&data.philo[i]);
-	ft_free((void *)&data);
+		return (free_data(&data), 0);
+	free_data(&data);
 	return (0);
 }

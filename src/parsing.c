@@ -6,7 +6,7 @@
 /*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:35:30 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 00:49:29 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/16 14:54:45 by nicolasbern      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	init_philo(t_philo *philo, t_data *data)
 			philo[i].r_fork = i - 1;
 		philo[i].mode = WAITING;
 		philo[i].diner = 0;
-		philo[i].data_philo = data;
+		philo[i].table = data;
 		philo[i].last_diner = timer();
 		philo[i].next_diner = timer() + data->time_to_die;
 	}
