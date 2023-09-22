@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 13:55:17 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 15:21:58 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/18 11:03:22 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	ft_usleep(int time)
 
 void	free_data(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < data->number_of_philosophers)
 		pthread_mutex_destroy(&data->forks[i]);
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->status);
-	free(data->forks);
 	free(data->thread);
+	free(data->forks);
 	free(data->philo);
 }

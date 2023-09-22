@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:12:28 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 14:56:54 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/18 11:03:59 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	philo_thinking(t_philo *philo)
 	if (philo->table->life == NOT_ALIVE || philo->table->lunch == FULL)
 		return ;
 	if (philo->table->life == ALIVE || philo->table->lunch == NOT_FULL)
-	print_msg(philo, THINKING);
+		print_msg(philo, THINKING);
 	philo->mode = WAITING;
 }
 
@@ -68,7 +68,7 @@ void	sleeping(t_philo *philo)
 	if (philo->table->life == NOT_ALIVE || philo->table->lunch == FULL)
 		return ;
 	if (philo->table->life == ALIVE || philo->table->lunch == NOT_FULL)
-	print_msg(philo, SLEEPING);
+		print_msg(philo, SLEEPING);
 	ft_usleep(philo->table->time_to_sleep);
 	philo->mode = THINKING;
 }

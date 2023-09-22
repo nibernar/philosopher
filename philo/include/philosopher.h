@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:52:15 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 15:18:42 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/18 11:13:18 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+         #
+#    By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 13:56:12 by nibernar          #+#    #+#              #
-#    Updated: 2023/09/16 00:15:25 by nicolasbern      ###   ########.fr        #
+#    Updated: 2023/09/18 11:37:20 by nibernar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

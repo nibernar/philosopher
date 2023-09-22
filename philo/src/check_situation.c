@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_situation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:27:06 by nibernar          #+#    #+#             */
-/*   Updated: 2023/09/16 14:57:25 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/18 11:04:25 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	philo_is_satisfied(t_data *data)
 
 bool	philo_is_dead(t_philo *philo)
 {
-	size_t time;
+	size_t	time;
 
 	time = timer();
 	if (time > philo->next_diner)
