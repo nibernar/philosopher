@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 15:50:46 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/18 11:28:43 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:31:21 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_mode(t_mode mode)
 	if (mode == THINKING)
 		printf("is thinking\n");
 	if (mode == EATING)
-		printf("eating\n");
+		printf("is eating\n");
 	if (mode == SLEEPING)
 		printf("is sleeping\n");
 	if (mode == TAKING)

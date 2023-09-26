@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:35:30 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 14:54:45 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/22 11:03:23 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-static int	init_args(int argc, char **argv, t_data *data)
+static int	init_args(char **argv, t_data *data)
 {
 	if (it_is_digit(argv[1]) && ft_atoi(argv[1]) >= 1)
 		data->number_of_philosophers = ft_atoi(argv[1]);
@@ -35,7 +35,7 @@ static int	init_args(int argc, char **argv, t_data *data)
 
 static int	init_data(int argc, char **argv, t_data *data)
 {
-	if (init_args(argc, argv, data))
+	if (init_args(argv, data))
 		return (EXIT_FAILURE);
 	if (argc == 6)
 	{
@@ -65,7 +65,7 @@ static void	init_philo(t_philo *philo, t_data *data)
 			philo[i].r_fork = (data->number_of_philosophers - 1);
 		else
 			philo[i].r_fork = i - 1;
-		philo[i].mode = WAITING;
+		philo[i].mode = WAITING_ROOM;
 		philo[i].diner = 0;
 		philo[i].table = data;
 		philo[i].last_diner = timer();

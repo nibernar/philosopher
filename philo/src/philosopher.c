@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:36:01 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 15:18:24 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/22 11:02:08 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	*routine(void *data)
 	{
 		if (philo->table->life == NOT_ALIVE || philo->table->lunch == FULL)
 			break ;
-		if (philo->mode == WAITING)
+		if (philo->mode == WAITING_ROOM)
 		{
 			if (philo->index % 2 == 0)
 				ft_usleep(5);
@@ -44,7 +44,6 @@ static void	*routine(void *data)
 static int	start_game(t_data *data)
 {
 	int	i;
-	int	l;
 
 	i = -1;
 	while (++i < data->number_of_philosophers)
@@ -69,6 +68,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 	t_philo	*philo;
 
+	philo = NULL;
 	if (argc == 5 || argc == 6)
 	{
 		if (parsing(argc, argv, &data, philo))

@@ -3,47 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasbernard <nicolasbernard@student.    +#+  +:+       +#+        */
+/*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:37:35 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/16 00:34:44 by nicolasbern      ###   ########.fr       */
+/*   Updated: 2023/09/21 08:40:32 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 #include <limits.h>
 
-/**
- * @brief Checks if the character is a space character.
- * 
- * @param c The character to test.
- * @return Returns a nonzero value if the character is a space character,
- * 0 if the character is not space.
- */
 static int	ft_isspace(int c)
 {
 	return (c == '\n' || c == '\r' || c == '\v' || c == '\t' \
 			|| c == '\f' || c == ' ');
 }
 
-/**
- * @brief Checks if the character is a digital character.
- * 
- * @param c The character to test.
- * @return Returns a nonzero value if the character is a digital character,
- * 0 if the character is not digital.
- */
 static int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
 
-/**
- * @brief Convert ASCII string to integer.
- * 
- * @param str The string to convert.
- * @return The new integer, Result of character string conversion.
- */
 int	ft_atoi(const char *str)
 {
 	int			i;

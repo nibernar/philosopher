@@ -6,7 +6,7 @@
 #    By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 13:56:12 by nibernar          #+#    #+#              #
-#    Updated: 2023/09/18 11:37:20 by nibernar         ###   ########.fr        #
+#    Updated: 2023/09/22 11:12:41 by nibernar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ OBJS		=	${SRCS:.c=.o}
 # 	COMPILER OPTIONS	#
 #########################
 
-CFLAG		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -O2
 CC			=	cc
 
 #########################

@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:12:28 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/18 11:03:59 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/21 11:27:21 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	philo_thinking(t_philo *philo)
 
 void	take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->forks[philo->r_fork]);
+	pthread_mutex_lock(&philo->table->forks[philo->l_fork]);
 	if (philo->table->life == NOT_ALIVE || philo->table->lunch == FULL)
 	{
-		pthread_mutex_unlock(&philo->table->forks[philo->r_fork]);
+		pthread_mutex_unlock(&philo->table->forks[philo->l_fork]);
 		return ;
 	}
 	if (philo->table->life == ALIVE || philo->table->lunch == NOT_FULL)
 		print_msg(philo, TAKING);
-	pthread_mutex_lock(&philo->table->forks[philo->l_fork]);
+	pthread_mutex_lock(&philo->table->forks[philo->r_fork]);
 	if (philo->table->life == NOT_ALIVE || philo->table->lunch == FULL)
 	{
-		pthread_mutex_unlock(&philo->table->forks[philo->r_fork]);
 		pthread_mutex_unlock(&philo->table->forks[philo->l_fork]);
+		pthread_mutex_unlock(&philo->table->forks[philo->r_fork]);
 		return ;
 	}
 	if (philo->table->life == ALIVE \

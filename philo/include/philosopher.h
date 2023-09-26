@@ -6,7 +6,7 @@
 /*   By: nibernar <nibernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:52:15 by nicolasbern       #+#    #+#             */
-/*   Updated: 2023/09/18 11:13:18 by nibernar         ###   ########.fr       */
+/*   Updated: 2023/09/25 12:49:54 by nibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef enum e_mode
 {
+	WAITING_ROOM,
 	WAITING,
 	THINKING,
 	EATING,
@@ -59,8 +60,8 @@ typedef struct s_philo
 	int				index;
 	int				r_fork;
 	int				l_fork;
-	long			last_diner;
-	long			next_diner;
+	size_t			last_diner;
+	size_t			next_diner;
 	int				diner;
 	t_mode			mode;
 	struct s_data	*table;
@@ -100,15 +101,12 @@ int		parsing(int argc, char **argv, t_data *data, t_philo *philo);
 *   Dead     *
 *************/
 
-bool	philo_is_dead(t_philo *philo);
 void	check_philo_situation(t_data *data);
 
 /*************
 *   Print    *
 *************/
 
-void	print_philo(t_philo *philo);
-void	print_forks(t_philo *philo);
 void	print_mode(t_mode mode);
 void	print_msg(t_philo *philo, t_mode mode);
 void	print_dead_msg(t_philo *philo, t_mode mode);
